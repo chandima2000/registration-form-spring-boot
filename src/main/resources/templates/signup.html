@@ -1,6 +1,5 @@
-
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,7 +28,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh; /* Ensure the page takes at least the full viewport height */
+            min-height: 100vh;
         }
         .form-container {
             border: 2px solid #007bff;
@@ -41,19 +40,17 @@
             max-width: 600px;
             margin-top: 100px;
         }
-
         .form-container h2 {
-            color: blue; /* Blue color for the form title */
-            margin-bottom: 20px; /* Optional: Add some bottom margin for spacing */
+            color: blue;
+            margin-bottom: 20px;
             text-align: center;
         }
         .form-container .form-control:valid ~ .valid-feedback {
             display: block;
         }
         .signup-button {
-            margin-top: 20px; /* Adjust the margin as needed */
-            text-align: center; /* Center the button horizontally */
-            
+            margin-top: 20px;
+            text-align: center;
         }
         .signup-button button {
             background-color: blue;
@@ -65,7 +62,7 @@
             cursor: pointer;
         }
         .signup-button button:hover {
-            background-color: #003399; /* Darker shade of blue on hover */
+            background-color: #003399;
         }
     </style>
 </head>
@@ -82,7 +79,7 @@
             </ul>
             <form class="d-flex">
                 <a class="btn btn-outline-Light" type="button" href="#">Login</a>
-                <a class="btn btn-outline-Light" type="button" href="#index.html">Signup</a>
+                <a class="btn btn-outline-Light" type="button" href="#">Signup</a>
             </form>
         </div>
     </div>
@@ -91,10 +88,10 @@
 <!-- Form application -->
 <div class="form-container">
     <h2 class="mb-4">Signup</h2>
-    <form class="row g-3 needs-validation" novalidate>
+    <form class="row g-3 needs-validation" th:action="@{/signup}" th:object="${user}" method="post" novalidate>
         <div class="col-12">
             <label for="validationServer01" class="form-label">Name</label>
-            <input type="text" class="form-control" id="validationServer01" placeholder="Add your name" required>
+            <input type="text" class="form-control" id="validationServer01" placeholder="Add your name" th:field="*{name}" required>
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -105,7 +102,7 @@
 
         <div class="col-12">
             <label for="validationServer03" class="form-label">Email</label>
-            <input type="email" class="form-control" id="validationServer03" placeholder="Add your email" required>
+            <input type="email" class="form-control" id="validationServer03" placeholder="Add your email" th:field="*{email}" required>
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -116,7 +113,7 @@
 
         <div class="col-12">
             <label for="validationServer04" class="form-label">Contact Number</label>
-            <input type="tel" pattern="0\d{9}" class="form-control" id="validationServer04" placeholder="Add your contact number" required>
+            <input type="tel" pattern="0\d{9}" class="form-control" id="validationServer04" placeholder="Add your contact number" th:field="*{contactNumber}" required>
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -127,7 +124,7 @@
 
         <div class="col-12">
             <label for="validationServer05" class="form-label">Password</label>
-            <input type="password" class="form-control" id="validationServer05" placeholder="Add your password" required>
+            <input type="password" class="form-control" id="validationServer05" placeholder="Add your password" th:field="*{password}" required>
             <div class="valid-feedback" id="passwordValidFeedback">
                 Password meets requirements.
             </div>
@@ -138,7 +135,7 @@
 
         <div class="col-12">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" required>
+                <input class="form-check-input" type="checkbox" id="invalidCheck3" required>
                 <label class="form-check-label" for="invalidCheck3">
                     Agree to terms and conditions
                 </label>
@@ -231,19 +228,6 @@
                 }, false);
             });
     })();
-
 </script>
 </body>
 </html>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
-
