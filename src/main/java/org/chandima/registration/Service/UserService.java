@@ -43,17 +43,4 @@ public class UserService {
         }
     }
 
-//    public UserDTO login(String email, String password) {
-//        System.out.println("UserService login attempt for email: " + email);
-//        User user = userRepository.findByEmail(email);
-//        if (user != null && user.getPassword().equals(password)) {
-//            UserDTO userDTO = new UserDTO();
-//            userDTO.setName(user.getName());
-//            userDTO.setEmail(user.getEmail());
-//            userDTO.setMobileNo(user.getMobileNo());
-//            return userDTO;
-//        }
-//        return null;
-//    }
-
 }
