@@ -55,7 +55,7 @@
                             <span th:text="${success}"></span>
                         </div>
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="loginUsername">Username/Email</label>
+                            <label class="form-label" for="loginUsername">Email</label>
                             <input type="text" id="loginUsername" th:field="*{email}" class="form-control form-control-lg" required />
                         </div>
                         <div class="form-outline mb-4">
@@ -63,8 +63,16 @@
                             <input type="password" id="loginPassword" th:field="*{password}" class="form-control form-control-lg" required/>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block mb-3">Login</button>
+
+                        <div th:if="${message}" class="alert alert-success" role="alert">
+                            <p th:text="${message}"></p>
+                        </div>
+                        <div th:if="${#strings.isEmpty(message)}" class="alert alert-danger" role="alert">
+                            <p>Login failed</p>
+                        </div>
+
                         <div class="text-center">
-                            <p>New member? <a href="signup.html" style="color: #007bff;">Sign up here</a></p>
+                            <p style="color: white;">Not a member? <a href="signup.html" style="color: #007bff; text-decoration: none;">Register</a></p>
                         </div>
                     </form>
                 </div>
