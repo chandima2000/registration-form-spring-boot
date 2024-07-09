@@ -10,14 +10,34 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepo;
+
 
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private UserRepository userRepository;
     public UserDTO saveUser(UserDTO userDTO){
-        userRepo.save(modelMapper.map(userDTO, User.class));
+        userRepository.save(modelMapper.map(userDTO, User.class));
         return userDTO;
     }
+
+    public boolean authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        return user != null && user.getPassword().equals(password);
+    }
+
+    public UserDTO login(String email, String password) {
+        System.out.println("UserService login attempt for email: " + email);
+        User user = userRepository.findByEmail(email);
+        if (user != null && user.getPassword().equals(password)) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setName(user.getName());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setMobileNo(user.getMobileNo());
+            return userDTO;
+        }
+        return null;
+    }
+
 }
