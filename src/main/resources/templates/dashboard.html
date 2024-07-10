@@ -1,3 +1,23 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <title>Dashboard</title>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container mt-5">-->
+<!--    <div th:if="${success}" class="alert alert-success" role="alert">-->
+<!--        <span th:text="${success}"></span>-->
+<!--    </div>-->
+<!--    <h1>Welcome to the Dashboard</h1>-->
+<!--    &lt;!&ndash; Add your dashboard content here &ndash;&gt;-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -6,14 +26,168 @@
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+        .sidebar {
+            background-color: #1a1a1a;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            color: #fff;
+            padding: 15px;
+            text-decoration: none;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #007bff;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #fff; /* Ensuring the text color is white */
+        }
+
+    </style>
 </head>
 <body>
-<div class="container mt-5">
-    <div th:if="${success}" class="alert alert-success" role="alert">
-        <span th:text="${success}"></span>
-    </div>
-    <h1>Welcome to the Dashboard</h1>
-    <!-- Add your dashboard content here -->
+<div class="sidebar">
+    <a href="#dashboard">Dashboard</a>
+    <a href="#analytics">Analytics</a>
+    <a href="#commerce">Commerce</a>
+    <a href="#sales">Sales</a>
+    <a href="#crm">CRM</a>
+    <!-- Add more menu items here -->
 </div>
+
+<div class="content">
+    <div class="container-fluid">
+        <div th:if="${success}" class="alert alert-success" role="alert">
+            <span th:text="${success}"></span>
+        </div>
+        <h1>Welcome to the Dashboard</h1>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <h5 class="card-title">New Accounts</h5>
+                    <p class="card-text">234</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <h5 class="card-title">Total Expenses</h5>
+                    <p class="card-text">71%</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <h5 class="card-title">Company Value</h5>
+                    <p class="card-text">$1.45M</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <h5 class="card-title">New Employees</h5>
+                    <p class="card-text">34 hires</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 mb-4">
+                <div class="card">
+                    <h5 class="card-title">Traffic Sources</h5>
+                    <canvas id="trafficChart"></canvas>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <h5 class="card-title">Income</h5>
+                    <canvas id="incomeChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <h5 class="card-title">Income</h5>
+                    <p class="card-text">$5,456</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <h5 class="card-title">Expenses</h5>
+                    <p class="card-text">$4,764</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <h5 class="card-title">Spendings</h5>
+                    <p class="card-text">$1.5M</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+    const trafficChart = new Chart(trafficCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Website Blog',
+                data: [30, 50, 40, 60, 50, 70, 60, 90, 80, 100, 90, 110],
+                backgroundColor: '#007bff'
+            }, {
+                label: 'Social Media',
+                data: [20, 40, 30, 50, 40, 60, 50, 80, 70, 90, 80, 100],
+                backgroundColor: '#28a745'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const incomeCtx = document.getElementById('incomeChart').getContext('2d');
+    const incomeChart = new Chart(incomeCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Spent', 'Remaining'],
+            datasets: [{
+                data: [75, 25],
+                backgroundColor: ['#007bff', '#6c757d']
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
