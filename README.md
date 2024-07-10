@@ -44,7 +44,7 @@ Thanks go to these wonderful people.
 - Hansani (CS/2020/021): Signup backend development, and database integration.
 - Supuni (CS/2020/026): Signup frontend development and form validation.
 - Piyumi (CS/2020/024): Login backend development, and database integration.
-- Ransika (CS/2020/053): Login frontend development and form validation.
+- Ransika (CS/2020/058): Login frontend development and form validation.
 - Kavindi (CS/2020/023): Dashboard development and Login backend development 
 
 
