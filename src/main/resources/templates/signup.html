@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sign Up</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-vpCSDQZb9+94H2OZvIvo9BgrOH77id5lpi2Js3hG5EjOkL0chJzTOjzNtlF43ikf" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             background-color: #000;
@@ -16,7 +16,7 @@
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+            background-color: rgba(255, 255, 255, 0.1);
         }
         .form-control:focus {
             box-shadow: none;
@@ -25,9 +25,6 @@
         .form-label {
             margin-left: 10px;
             font-weight: bold;
-            color: #007bff;
-        }
-        .form-check-label {
             color: #007bff;
         }
         .btn-primary {
@@ -40,6 +37,19 @@
         .btn-primary:hover {
             background-color: #0056b3;
         }
+        .login-link {
+            text-align: center;
+            margin-top: 10px;
+            color: #fff;
+        }
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-link a:hover {
+            color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -47,46 +57,40 @@
     <div class="container py-5 h-100">
         <div class="row d-flex align-items-center justify-content-center h-100">
             <div class="col-md-6 col-lg-5 col-xl-4 mb-5 mb-lg-0">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                     class="img-fluid" alt="Sample image">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" class="img-fluid" alt="Sample image">
             </div>
             <div class="col-md-6 col-lg-7 col-xl-6">
                 <div class="card">
-                    <h2 class="text-center mb-4" style="color: #fff;">Registration Form</h2>
-                    <form th:action="@{/auth/signup}" th:object="${registerRequest}" method="post">
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="registerName">Name</label>
-                            <input type="text" id="registerName" th:field="*{name}" class="form-control form-control-lg" />
+                    <h2 class="text-center mb-4" style="color: #fff;">Sign Up Form</h2>
+                    <form id="signupForm" th:action="@{/signup}" th:object="${registerRequest}" method="post">
+                        <div th:if="${error}" class="alert alert-danger" role="alert">
+                            <span th:text="${error}"></span>
                         </div>
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="registerEmail">Email</label>
-                            <input type="email" id="registerEmail" th:field="*{email}" class="form-control form-control-lg" />
+                            <label class="form-label" for="signupName">Name</label>
+                            <input type="text" id="signupName" th:field="*{name}" class="form-control form-control-lg" required />
                         </div>
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="registerPassword">Password</label>
-                            <input type="password" id="registerPassword" th:field="*{password}" class="form-control form-control-lg" />
+                            <label class="form-label" for="signupEmail">Email</label>
+                            <input type="email" id="signupEmail" th:field="*{email}" class="form-control form-control-lg" required />
                         </div>
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="registerContactNumber">Contact Number</label>
-                            <input type="text" id="registerContactNumber" th:field="*{mobileNo}" class="form-control form-control-lg" />
+                            <label class="form-label" for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" th:field="*{password}" class="form-control form-control-lg" required/>
                         </div>
-
-                        <button type="submit" class="btn btn-primary btn-block mb-3">Sign up</button>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="signupMobileNo">Mobile Number</label>
+                            <input type="text" id="signupMobileNo" th:field="*{mobileNo}" class="form-control form-control-lg" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mb-3">Sign Up</button>
+                        <div class="login-link">
+                            Already have an account? <a href="/login">Login</a>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+9oXZ5pV5Fsp5VQnWPe/Jp6Lq2pNs" crossorigin="anonymous"></script>
-<script>
-    document.getElementById('register-link').addEventListener('click', function (event) {
-        event.preventDefault();
-        var registerTab = new bootstrap.Tab(document.getElementById('tab-register'));
-        registerTab.show();
-    });
-</script>
-
 </body>
 </html>

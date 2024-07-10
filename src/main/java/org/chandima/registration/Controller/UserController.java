@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
-
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin("*")
@@ -17,29 +16,30 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signup")
-    public UserDTO signUp(@ModelAttribute User user){
+    public Map<String, String> signUp(@ModelAttribute User user){
         UserDTO userDTO = new UserDTO();
         userDTO.setName(user.getName());
         userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
         userDTO.setMobileNo(user.getMobileNo());
-        System.out.println("Successfully Registered");
-        return userService.saveUser(userDTO);
+
+        UserDTO savedUser = userService.saveUser(userDTO);
+        if (savedUser == null) {
+            return Map.of("status", "error", "message", "Email is already registered");
+        }
+        return Map.of("status", "success", "message", "Successfully registered");
     }
 
     @PostMapping("/login")
-    public UserDTO logIn(@RequestBody Map<String, String> loginRequest){
+    public Map<String, String> logIn(@RequestBody Map<String, String> loginRequest){
         String email = loginRequest.get("email");
         String password = loginRequest.get("password");
 
         UserDTO userDTO = userService.getUser(email, password);
         if (userDTO != null){
-            System.out.println("Successfully logged in");
-            return userDTO;
+            return Map.of("status", "success", "message", "Successfully logged in");
         }else {
-            System.out.println("Login failed");
-            return null;
+            return Map.of("status", "error", "message", "Login failed");
         }
     }
-
 }

@@ -37,6 +37,19 @@
         .btn-primary:hover {
             background-color: #0056b3;
         }
+        .signup-link {
+            text-align: center;
+            margin-top: 10px;
+            color: #fff;
+        }
+        .signup-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .signup-link a:hover {
+            color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -44,15 +57,14 @@
     <div class="container py-5 h-100">
         <div class="row d-flex align-items-center justify-content-center h-100">
             <div class="col-md-6 col-lg-5 col-xl-4 mb-5 mb-lg-0">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-                     class="img-fluid" alt="Sample image">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid" alt="Sample image">
             </div>
             <div class="col-md-6 col-lg-7 col-xl-6">
                 <div class="card">
                     <h2 class="text-center mb-4" style="color: #fff;">Login Form</h2>
-                    <form id="loginForm" th:action="@{/auth/login}" th:object="${loginRequest}" method="post">
-                        <div th:if="${success}" class="alert alert-success" role="alert">
-                            <span th:text="${success}"></span>
+                    <form id="loginForm" th:action="@{/login}" th:object="${loginRequest}" method="post">
+                        <div th:if="${error}" class="alert alert-danger" role="alert">
+                            <span th:text="${error}"></span>
                         </div>
                         <div class="form-outline mb-4">
                             <label class="form-label" for="loginUsername">Email</label>
@@ -63,51 +75,14 @@
                             <input type="password" id="loginPassword" th:field="*{password}" class="form-control form-control-lg" required/>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block mb-3">Login</button>
-
-
+                        <div class="signup-link">
+                            Not a member? <a href="/signup">Sign up</a>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<script>
-    async function submitLoginForm(event) {
-        event.preventDefault();
-
-        const formData = new FormData(document.getElementById('loginForm'));
-        const formDataJson = Object.fromEntries(formData.entries());
-
-        try {
-            const response = await fetch('/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formDataJson)
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log('Login successful:', data);
-            // Show a dialog box with the success message
-            alert('Login successful!');
-            // Redirect to dashboard after showing the success message
-            window.location.href = '/dashboard';
-        } catch (error) {
-            console.error('Login error:', error);
-            // Show an error message in case of login failure
-            alert('Login failed: ' + error.message);
-        }
-    }
-
-    document.getElementById('loginForm').addEventListener('submit', submitLoginForm);
-
-</script>
-
 </body>
 </html>
